@@ -14,10 +14,10 @@ import { cn } from "@/lib/utils";
 export function SiteHeader() {
   return (
     <header className="backdrop-blur sticky top-0 z-40 w-full h-[70px] mt-1">
-      <div className="px-10 flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
+      <div className="px-4 lg:px-10 flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <MainNav />
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <nav className="flex items-center space-x-2">
+          <nav className="hidden lg:flex items-center space-x-2">
             {/* <div className="relative w-full">
               <Input
                 className="pl-9 bg-[#333230] border-none rounded-full h-12 text-white focus-visible:border-white focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 "
@@ -61,6 +61,9 @@ export function SiteHeader() {
               </DropdownMenuContent>
             </DropdownMenu>
           </nav>
+          <Button className="lg:hidden block">
+            Sign In
+          </Button>
         </div>
       </div>
     </header>
@@ -72,7 +75,7 @@ export function MainNav() {
     <div className="flex items-center gap-6 md:gap-10">
       <a
         href="/"
-        className="flex items-center gap-1 text-4xl font-bold text-white"
+        className="flex items-center gap-1 text-2xl lg:text-4xl font-bold text-white"
       >
         <img src="/salah-habit.svg" className="w-12 h-12" />
         Salah Habit

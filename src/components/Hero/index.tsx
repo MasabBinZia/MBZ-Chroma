@@ -7,7 +7,7 @@ import { HeroHighlight, Highlight } from "../magicui/hero-highlight";
 
 export default function HeroSection() {
   return (
-    <div className="flex flex-col items-center justify-center leading-6 mt-[3rem]">
+    <div className="flex flex-col items-center justify-center leading-6 mt-[rem] lg:mt-[3rem]">
       <HeroHighlight className="select-none">
         <motion.h1
           initial={{
@@ -24,13 +24,13 @@ export default function HeroSection() {
           }}
           className="scroll-m-20 text-4xl sm:text-4xl md:text-6xl font-semibold tracking-tight lg:text-7xl text-center max-w-[1120px] text-white"
         >
-          Stay Consistent with <br className="my-5" /><Highlight>Your Prayers.</Highlight>
+          Stay Consistent with <br className="my-2 lg:my-5" /><Highlight>Your Prayers.</Highlight>
         </motion.h1>
       </HeroHighlight>
-      <p className="mx-auto flex items-center text-gray-500 text-4xl text-center mt-2 dark:text-gray-400 select-none">
+      <p className="mx-auto flex items-center text-gray-500 text-2xl lg:text-4xl text-center mt-2 dark:text-gray-400 select-none">
         Track your
         <WordRotate
-          className="text-4xl text-primary font-bold px-2"
+          className="text-2xl lg:text-4xl text-primary font-bold px-2"
           words={["Fajr.", "Dhuhr.", "Asr.", "Maghrib.", "Isha."]}
         />
         prayers
@@ -54,7 +54,7 @@ export default function HeroSection() {
         </a>
       </div>
       <div>
-        <div className="relative flex max-w-6xl justify-center overflow-hidden mt-7">
+        <div className="relative flex max-w-6xl justify-center overflow-hidden mt-7 px-4">
           <div className="relative rounded-xl">
             <img
               src="https://utfs.io/f/69a12ab1-4d57-4913-90f9-38c6aca6c373-1txg2.png"

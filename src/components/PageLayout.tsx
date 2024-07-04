@@ -5,5 +5,5 @@ export default function PageLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="flex p-4 px-10 ">{children}</main>;
+  return <main className="flex p-4 px-4 lg:px-10 ">{children}</main>;
 }
