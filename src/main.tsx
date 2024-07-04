@@ -10,7 +10,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <SiteHeader />
     <RouterProvider router={router} />
-
     <DockDemo />
   </React.StrictMode>
 );

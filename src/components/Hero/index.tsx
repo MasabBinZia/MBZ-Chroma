@@ -2,13 +2,32 @@ import { Button } from "../ui/button";
 import { BorderBeam } from "../magicui/border-beam";
 import WordRotate from "../magicui/word-rotate";
 import { Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { HeroHighlight, Highlight } from "../magicui/hero-highlight";
+
 export default function HeroSection() {
   return (
     <div className="flex flex-col items-center justify-center leading-6 mt-[3rem]">
-      <h1 className="scroll-m-20 text-4xl sm:text-4xl md:text-6xl font-semibold tracking-tight lg:text-7xl text-center max-w-[1120px] text-white">
-        Stay Consistent with <br /> Your Prayers.
-      </h1>
-      <p className="mx-auto flex items-center text-gray-500 text-4xl text-center mt-2 dark:text-gray-400">
+      <HeroHighlight className="select-none">
+        <motion.h1
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: [20, -5, 0],
+          }}
+          transition={{
+            duration: 0.5,
+            ease: [0.4, 0.0, 0.2, 1],
+          }}
+          className="scroll-m-20 text-4xl sm:text-4xl md:text-6xl font-semibold tracking-tight lg:text-7xl text-center max-w-[1120px] text-white"
+        >
+          Stay Consistent with <br className="my-5" /><Highlight>Your Prayers.</Highlight>
+        </motion.h1>
+      </HeroHighlight>
+      <p className="mx-auto flex items-center text-gray-500 text-4xl text-center mt-2 dark:text-gray-400 select-none">
         Track your
         <WordRotate
           className="text-4xl text-primary font-bold px-2"
@@ -16,6 +35,7 @@ export default function HeroSection() {
         />
         prayers
       </p>
+
       <div className="flex justify-center items-center gap-3">
         <a href="/dashboard" className="mt-5">
           <Button className="animate-buttonheartbeat rounded-md bg-blue-600 hover:bg-blue-500 text-sm font-semibold text-white">

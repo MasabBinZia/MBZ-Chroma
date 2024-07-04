@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Gloria+Hallelujah&family=Shadows+Into+Light&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Gloria+Hallelujah&family=Shadows+Into+Light&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -58,8 +58,8 @@
   body {
     @apply bg-[#1c1b19] text-foreground;
     font-family: "Chakra Petch", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+    font-weight: 400;
+    font-style: normal;
   }
 }
 
@@ -68,3 +68,5 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
+
+

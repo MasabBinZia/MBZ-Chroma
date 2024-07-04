@@ -1,3 +1,4 @@
+import GaugeCircle from "@/components/magicui/gauge-circle";
 import PageLayout from "@/components/PageLayout";
 import { User } from "lucide-react";
 
@@ -20,7 +21,17 @@ export default function Dashboard() {
             </div>
             <div className="grid w-full my-5 auto-rows-[12rem] grid-cols-3 gap-4">
               <div className="col-span-2 rounded-3xl bg-[#333230]"></div>
-              <div className="col-span-1 rounded-3xl bg-[#333230]"></div>
+              <div className="col-span-1 rounded-3xl bg-[#333230] flex flex-col gap-1 items-center justify-center">
+                <p>Today Progress</p>
+                <GaugeCircle
+                className="w-32 h-32"
+                  max={100}
+                  min={0}
+                  value={70}
+                  gaugePrimaryColor="#2563eb"
+                  gaugeSecondaryColor="rgba(0, 0, 0, 0.1)"
+                />
+              </div>
               <div className="col-span-3 rounded-3xl bg-[#333230]"></div>
             </div>
           </div>

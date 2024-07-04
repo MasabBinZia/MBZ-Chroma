@@ -27,7 +27,7 @@ export function SiteHeader() {
             </div> */}
 
             <a
-              key={"/dashboard"}
+              href={"/dashboard"}
               className={cn(
                 buttonVariants(),
                 "flex items-center h-12 text-lg font-medium text-white rounded-full bg-primary cursor-pointer"
