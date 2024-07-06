@@ -5,6 +5,7 @@ import { Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { HeroHighlight, Highlight } from "../magicui/hero-highlight";
 
+
 export default function HeroSection() {
   return (
     <div className="flex flex-col items-center justify-center leading-6 mt-[rem] lg:mt-[3rem]">
@@ -43,7 +44,7 @@ export default function HeroSection() {
           </Button>
         </a>
         <a
-          href="https://discord.gg/HUcHdrrDgY"
+          href=""
           target="_blank"
           className="mt-5"
         >

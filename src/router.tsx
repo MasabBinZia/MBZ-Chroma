@@ -10,4 +10,5 @@ export const router = createBrowserRouter([
   { path: "/badges", element: <>BadgesPage</> },
   { path: "/profile", element: <>profilePage</> },
   { path: "/leaderboards", element: <>Leaderboards</> },
+  { path: "/donate", element: <>donatePage</> },
 ]);

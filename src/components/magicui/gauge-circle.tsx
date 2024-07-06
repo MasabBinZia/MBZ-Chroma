@@ -7,6 +7,7 @@ interface Props {
   gaugePrimaryColor: string;
   gaugeSecondaryColor: string;
   className?: string;
+  type: "percentage" | "normal";
 }
 
 export default function GaugeCircle({
@@ -16,10 +17,16 @@ export default function GaugeCircle({
   gaugePrimaryColor,
   gaugeSecondaryColor,
   className,
+  type = "normal",
 }: Props) {
   const circumference = 2 * Math.PI * 45;
   const percentPx = circumference / 100;
   const currentPercent = ((value - min) / (max - min)) * 100;
+
+  const displayValue =
+    type === "percentage"
+      ? `${currentPercent.toFixed(1)}%`
+      : Math.min(value, max).toString();
 
   return (
     <div
@@ -54,7 +61,7 @@ export default function GaugeCircle({
             strokeDashoffset="0"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className=" opacity-100"
+            className="opacity-100"
             style={
               {
                 stroke: gaugeSecondaryColor,
@@ -101,7 +108,13 @@ export default function GaugeCircle({
         data-current-value={currentPercent}
         className="duration-[var(--transition-length)] delay-[var(--delay)] absolute inset-0 m-auto h-fit w-fit ease-linear animate-in fade-in"
       >
-        {currentPercent} %
+        {type === "percentage" ? (
+          displayValue
+        ) : (
+          <p className="text-xl">
+            {value} Days Streak
+          </p>
+        )}
       </span>
     </div>
   );

@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import FlipLink from "../magicui/reveal-link";
 
 export function SiteHeader() {
   return (
@@ -18,14 +19,6 @@ export function SiteHeader() {
         <MainNav />
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="hidden lg:flex items-center space-x-2">
-            {/* <div className="relative w-full">
-              <Input
-                className="pl-9 bg-[#333230] border-none rounded-full h-12 text-white focus-visible:border-white focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 "
-                placeholder="Type something..."
-              />
-              <Search className="absolute left-0 top-[2px] m-2.5 h-6 w-6 text-white" />
-            </div> */}
-
             <a
               href={"/dashboard"}
               className={cn(
@@ -56,14 +49,14 @@ export function SiteHeader() {
               <DropdownMenuContent className="bg-[#333230] border-none text-white">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <a href="/profile">Profile</a>
+                </DropdownMenuItem>
                 <DropdownMenuItem>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </nav>
-          <Button className="lg:hidden block">
-            Sign In
-          </Button>
+          <Button className="lg:hidden block">Sign In</Button>
         </div>
       </div>
     </header>
@@ -75,16 +68,17 @@ export function MainNav() {
     <div className="flex items-center gap-6 md:gap-10">
       <a
         href="/"
-        className="flex items-center gap-1 text-2xl lg:text-4xl font-bold text-white"
+        className="flex items-center gap-1 text-2xl lg:text-4xl font-bold text-white "
       >
         <img src="/salah-habit.svg" className="w-12 h-12" />
         Salah Habit
       </a>
 
       <nav className="gap-6 hidden lg:flex text-white">
-        <a>Donate</a>
-        <a>Features</a>
-        <a>Leaderboard</a>
+        <FlipLink className="text-primary" href="/">Home</FlipLink>
+        <FlipLink href="/donate">Donate</FlipLink>
+        <FlipLink href="/#features">Features</FlipLink>
+        <FlipLink href="/leaderboards">Leaderboard</FlipLink>
       </nav>
     </div>
   );
