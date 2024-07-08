@@ -3,7 +3,6 @@ import GaugeCircle from "@/components/magicui/gauge-circle";
 import PageLayout from "@/components/PageLayout";
 import PastSixMonth from "@/components/PastSixMonth";
 import { Progress } from "@/components/ui/progress";
-import { User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {

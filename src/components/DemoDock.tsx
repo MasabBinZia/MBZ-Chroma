@@ -12,7 +12,6 @@ export function DockDemo() {
         <DockIcon name="Bagdes">
           <Award className="h-6 w-6 text-white" />
         </DockIcon>
-
         <Button className="rounded-full gap-0.5 text-xl h-12">
           <Plus /> Set Target
         </Button>
