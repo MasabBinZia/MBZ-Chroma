@@ -11,6 +11,6 @@ export const router = createBrowserRouter([
   { path: "/prayer-tracker", element: <>Prayer Tracker Page</> },
   { path: "/badges", element: <>BadgesPage</> },
   { path: "/profile", element: <>profilePage</> },
-  { path: "/leaderboards", element: <LeaderBoard/> },
-  { path: "/donate", element: <Donate/> },
+  { path: "/leaderboards", element: <LeaderBoard /> },
+  { path: "/donate", element: <Donate /> },
 ]);
