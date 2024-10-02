@@ -1,37 +1,34 @@
+"use client";
 import { useState } from 'react';
 import { useMutation } from 'convex/react';
-import { useUser } from '@clerk/nextjs';
-import { api } from '@/convex/_generated/api';
+import { api } from '../convex/_generated/api';
 
-export default function SubmitForm() {
+export default function ResourceForm() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [link, setLink] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
-  const submitResource = useMutation(api.resources.submitResource);
-  const { user } = useUser();
+  const addResource = useMutation(api.resources.submitResource);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (user) {
-      await submitResource({
-        title,
-        description,
-        link,
-        imageUrl,
-        userId: user.id,
-      });
-      setTitle('');
-      setDescription('');
-      setLink('');
-      setImageUrl('');
-    }
+    await addResource({
+      title,
+      description,
+      link,
+      imageUrl,
+      userId:""
+    });
+    setTitle('');
+    setDescription('');
+    setLink('');
+    setImageUrl('');
   };
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-      <h2 className="text-2xl font-bold">Submit a Resource</h2>
+      <h2 className="text-2xl font-bold">Add a Resource</h2>
       <input
         type="text"
         value={title}
@@ -64,7 +61,7 @@ export default function SubmitForm() {
         required
       />
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-        Submit Resource
+        Add Resource
       </button>
     </form>
   );

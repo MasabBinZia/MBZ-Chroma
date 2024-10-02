@@ -1,8 +1,9 @@
 'use client';
 import { useQuery } from "convex/react";
 import { api } from "../convex/_generated/api";
-import ResourceCard from "./_components/ResourceCard";
-import SubmitForm from "./_components/SubmitForm";
+import ResourceCard from "@/components/ResourceCard";
+import ResourceForm from "@/components/ResourceForm";
+// import SubmitForm from "./_components/SubmitForm";
 
 
 export default function Home() {
@@ -16,7 +17,6 @@ export default function Home() {
           <ResourceCard key={resource._id} resource={resource} />
         ))}
       </div>
-      {/* <SubmitForm /> */}
     </main>
   );
 }
