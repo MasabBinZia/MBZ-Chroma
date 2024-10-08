@@ -18,7 +18,7 @@ export const submitResource = mutation({
   handler: async (ctx, args) => {
     await ctx.db.insert("uiresources", {
       ...args,
-      approved: true,
+      approved: false,
     });
   },
 });
@@ -42,3 +42,6 @@ export const approveResource = mutation({
     await ctx.db.patch(args.id, { approved: true });
   },
 });
+
+
+

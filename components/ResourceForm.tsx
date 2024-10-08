@@ -1,68 +1,134 @@
 "use client";
-import { useState } from 'react';
-import { useMutation } from 'convex/react';
-import { api } from '../convex/_generated/api';
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useMutation } from "convex/react";
+import { api } from "../convex/_generated/api";
+import axios from "axios";
+import { useFormStatus } from "react-dom";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Textarea } from "./ui/textarea";
+
+const formSchema = z.object({
+  title: z.string().min(2, {
+    message: "Title must be at least 2 characters.",
+  }),
+  description: z.string().min(10, {
+    message: "Description must be at least 10 characters.",
+  }),
+  link: z.string().url({
+    message: "Please enter a valid URL.",
+  }),
+});
 
 export default function ResourceForm() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [link, setLink] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-
   const addResource = useMutation(api.resources.submitResource);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await addResource({
-      title,
-      description,
-      link,
-      imageUrl,
-      userId:""
-    });
-    setTitle('');
-    setDescription('');
-    setLink('');
-    setImageUrl('');
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      link: "",
+    },
+  });
+
+  const captureAndUploadScreenshot = async (url: string) => {
+    try {
+      const response = await axios.post("/api/capture-screenshot", { url });
+      if (!response.data.imageUrl) {
+        throw new Error("Failed to capture and upload screenshot");
+      }
+      return response.data.imageUrl;
+    } catch (error) {
+      console.error("Error capturing and uploading screenshot:", error);
+      throw error;
+    }
   };
 
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const capturedImageUrl = await captureAndUploadScreenshot(values.link);
+      await addResource({
+        ...values,
+        imageUrl: capturedImageUrl,
+        userId: "",
+      });
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting resource:", error);
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-      <h2 className="text-2xl font-bold">Add a Resource</h2>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
-        className="w-full p-2 border rounded"
-        required
-      />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description"
-        className="w-full p-2 border rounded"
-        required
-      />
-      <input
-        type="url"
-        value={link}
-        onChange={(e) => setLink(e.target.value)}
-        placeholder="Link"
-        className="w-full p-2 border rounded"
-        required
-      />
-      <input
-        type="url"
-        value={imageUrl}
-        onChange={(e) => setImageUrl(e.target.value)}
-        placeholder="Image URL"
-        className="w-full p-2 border rounded"
-        required
-      />
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-        Add Resource
-      </button>
-    </form>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-4">
+        <h2 className="text-2xl font-bold">Add a Resource</h2>
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter title" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Enter description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="link"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Link</FormLabel>
+              <FormControl>
+                <Input type="url" placeholder="Enter URL" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <SubmitButton />
+      </form>
+    </Form>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      type="submit"
+      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      disabled={pending}
+    >
+      {pending ? "Submitting..." : "Add Resource"}
+    </Button>
   );
 }
