@@ -31,7 +31,11 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <ConvexClientProvider>{children}</ConvexClientProvider>
+          <ConvexClientProvider>
+            <div vaul-drawer-wrapper="" className="bg-background">
+              {children}
+            </div>
+          </ConvexClientProvider>
         </body>
       </html>
     </ClerkProvider>
