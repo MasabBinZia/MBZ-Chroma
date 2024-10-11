@@ -7,6 +7,8 @@ import React from "react";
 import { useUser } from "@clerk/nextjs";
 
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import ResquestedResourcesTable from "@/components/ResquestedResourcesTable";
+import ReqImageViewer from "@/components/ReqImageViewer";
 
 export default function page() {
   const { user } = useUser();
@@ -49,11 +51,11 @@ export default function page() {
 
   return (
     <main>
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Admin: Unapproved Resources   <SignedIn>
+      <div className="mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">Admin: Unapproved Resources  <SignedIn>
           <UserButton />
         </SignedIn></h1>
-        <table className="min-w-full bg-white">
+        {/* <table className="min-w-full bg-white">
           <thead>
             <tr>
               <th className="py-2 px-4 border-b">Title</th>
@@ -84,19 +86,23 @@ export default function page() {
                   >
                     Approve
                   </button>
-                  {/* <button
+      <button
                   onClick={() => handleReject(resource._id)}
                   disabled={loading}
                   className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
                 >
                   Reject
-                </button> */}
+                </button> 
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </table> */}
+
+        <ResquestedResourcesTable cards={cards} loading={loading} handleApprove={handleApprove} />
       </div>
+
+      <ReqImageViewer/>
       {/* <ResourceForm /> */}
       {unApprovedResources?.length}
       {unApprovedResources && <FocusCards cards={cards} />}
