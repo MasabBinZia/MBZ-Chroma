@@ -1,7 +1,7 @@
 import React from "react";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 
-export default function ReqImageViewer({ imageUrl, title }: any) {
+export default function ReqImageViewer({ imageUrl, title }: {imageUrl:string,title:string}) {
   return (
     <PhotoProvider>
       <div className="foo">

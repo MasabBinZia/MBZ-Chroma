@@ -47,6 +47,7 @@ export default function page() {
       title: resource.title,
       src: resource.imageUrl,
       link: resource.link,
+      description: resource.description,
     })) || [];
 
   return (
@@ -102,7 +103,6 @@ export default function page() {
         <ResquestedResourcesTable cards={cards} loading={loading} handleApprove={handleApprove} />
       </div>
 
-      <ReqImageViewer/>
       {/* <ResourceForm /> */}
       {unApprovedResources?.length}
       {unApprovedResources && <FocusCards cards={cards} />}

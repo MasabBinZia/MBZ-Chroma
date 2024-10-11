@@ -12,11 +12,25 @@ import ReqImageViewer from "./ReqImageViewer";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 
+type  Resource = {
+  title: string;
+  description: string;
+  link: string;
+  imageUrl: string;
+  _id: string;
+}
+
+type ResquestedResourcesTableProps = {
+  cards: any[];
+  loading: boolean;
+  handleApprove: (id: string) => void;
+};
+
 export default function ResquestedResourcesTable({
   cards,
   loading,
   handleApprove,
-}: any) {
+}: ResquestedResourcesTableProps) {
   return (
     <Table className="h-full mt-20">
       <TableHeader>
@@ -29,7 +43,7 @@ export default function ResquestedResourcesTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {cards.map((resource: any) => (
+        {cards.map((resource: Resource) => (
           <TableRow key={resource.title}>
             <TableCell>{resource.title}</TableCell>
 
