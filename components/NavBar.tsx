@@ -9,6 +9,7 @@ import ModeToggle from "./ModeToggle";
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export function NavBar() {
     const { user } = useUser();
@@ -25,7 +26,7 @@ export function NavBar() {
         <NavigationMenu>
           <NavigationMenuList className="max-[825px]:hidden ">
             <Link href="/" className="pl-2 flex items-center gap-1 text-xl font-bold">
-              <BookOpen />
+             <Image src={"/logo.png"} width={30} height={30} alt="mbz-choroma"/>
             </Link>
           </NavigationMenuList>
         </NavigationMenu>

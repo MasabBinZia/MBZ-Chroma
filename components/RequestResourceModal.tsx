@@ -25,7 +25,7 @@ export default function RequestResourceModal() {
           Request Resource
         </RainbowButton>
       </CredenzaTrigger>
-      <CredenzaContent>
+      <CredenzaContent className="bg-background">
         <CredenzaHeader>
           <CredenzaTitle>Credenza</CredenzaTitle>
           <CredenzaDescription>Welcome {user?.firstName}</CredenzaDescription>
