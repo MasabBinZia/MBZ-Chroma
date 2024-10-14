@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     const uploadResponse = await new Promise<CloudinaryUploadResult>(
       (resolve, reject) => {
         cloudinary.uploader
-          .upload_stream({ folder: "ui-resources" }, (error, result) => {
+          .upload_stream({ folder: process.env.CLOUDINARY_FOLDER_NAME }, (error, result) => {
             if (error) reject(error);
             else resolve(result as CloudinaryUploadResult);
           })

@@ -4,6 +4,7 @@ import { api } from "@/convex/_generated/api";
 import { useMutation, useQuery } from "convex/react";
 import React from "react";
 import { useUser } from "@clerk/nextjs";
+import axios from "axios";
 
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import ResquestedResourcesTable from "@/components/ResquestedResourcesTable";
@@ -15,7 +16,6 @@ export default function Page() {
   const approveResource = useMutation(api.resources.approveResource);
   const rejectResource = useMutation(api.resources.rejectResource);
   const [loading, setLoading] = React.useState(false);
-  // const rejectResource = useMutation(api.resources.rejectResource);
 
   const handleApprove = async (resourceId: Id<"uiresources">) => {
     setLoading(true);
@@ -24,9 +24,29 @@ export default function Page() {
   };
 
   const handleReject = async (resourceId: Id<"uiresources">) => {
-    setLoading(true);
-    await rejectResource({ id: resourceId });
-    setLoading(false);
+    try {
+      setLoading(true);
+  
+      const resourceToReject = unApprovedResources?.find((resource) => resource._id === resourceId);
+  
+      if (resourceToReject?.imageUrl) {
+        const urlParts = resourceToReject.imageUrl.split("/");
+        const publicId = urlParts[urlParts.length - 1].split(".")[0];
+  
+        try {
+          const response = await axios.post("/api/remove-cloudinary-image", { publicId });
+          console.log("Cloudinary deletion response:", response.data);
+        } catch (cloudinaryError: any) {
+          console.error("Error deleting image from Cloudinary:", cloudinaryError.response?.data || cloudinaryError.message);
+        }
+      }
+  
+      await rejectResource({ id: resourceId });
+    } catch (error) {
+      console.error("Error rejecting resource:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const isAuthorized =
