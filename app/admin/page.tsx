@@ -57,14 +57,15 @@ export default function Page() {
     })) || [];
 
   return (
-    <main>
-      <div className="mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">
-          Admin: Unapproved Resources{" "}
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-        </h1>
+    <main className="absolute h-screen w-full">
+      <div className="mx-auto py-32 container">
+        <h2 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-[#F5AF19] to-[#F12711] text-2xl md:text-4xl lg:text-7xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight">
+          Admin <br />
+          <span className="text-2xl">
+            ({unApprovedResources?.length}){" "}
+            <span className="text-foreground">UnApproved Resources left</span>
+          </span>
+        </h2>
 
         <ResquestedResourcesTable
           cards={cards}
@@ -74,8 +75,6 @@ export default function Page() {
         />
       </div>
 
-      {/* <ResourceForm /> */}
-      {unApprovedResources?.length}
       {unApprovedResources && <FocusCards cards={cards} />}
     </main>
   );

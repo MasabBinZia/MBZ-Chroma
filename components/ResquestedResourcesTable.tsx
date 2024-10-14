@@ -2,15 +2,15 @@ import React from "react";
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "./ui/table";
 import Link from "next/link";
-import ReqImageViewer from "./ReqImageViewer";
-import { Button, buttonVariants } from "./ui/button";
-import { cn } from "@/lib/utils";
+// import ReqImageViewer from "./ReqImageViewer";
+import { Button } from "./ui/button";
 import { Resource } from "@/types";
 import { Id } from "@/convex/_generated/dataModel";
 
@@ -25,43 +25,37 @@ export default function ResquestedResourcesTable({
   cards,
   loading,
   handleApprove,
-  handleReject
+  handleReject,
 }: ResquestedResourcesTableProps) {
   return (
-    <Table className="h-full mt-20">
+    <Table>
+      <TableCaption>A list of your UnApproved UI Resources</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Title</TableHead>
-          <TableHead>Descrription</TableHead>
+          <TableHead >Title</TableHead>
+          <TableHead>Description</TableHead>
           <TableHead>Link</TableHead>
           <TableHead>Image</TableHead>
-          <TableHead className="">Actions</TableHead>
+          <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {cards.map((resource: Resource) => (
-          <TableRow key={resource.title}>
+          <TableRow key={resource._id}>
             <TableCell>{resource.title}</TableCell>
-
-            <TableCell className="font-medium">
-              {resource.description}1
-            </TableCell>
+            <TableCell>{resource.description}</TableCell>
             <TableCell>
               <Link
                 href={resource.link}
-                className={cn(
-                  buttonVariants({ variant: "link" }),
-                  "text-blue-500"
-                )}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 {resource.link}
               </Link>
             </TableCell>
             <TableCell>
-              <ReqImageViewer
-                imageUrl={resource.imageUrl}
-                title={resource.title}
-              />
+              {/* <ReqImageViewer url={resource.image} /> */}
+              img
             </TableCell>
             <TableCell>
               <Button
