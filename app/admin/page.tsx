@@ -13,12 +13,19 @@ export default function Page() {
   const { user } = useUser();
   const unApprovedResources = useQuery(api.resources.getUnApprovedResources);
   const approveResource = useMutation(api.resources.approveResource);
+  const rejectResource = useMutation(api.resources.rejectResource);
   const [loading, setLoading] = React.useState(false);
   // const rejectResource = useMutation(api.resources.rejectResource);
 
   const handleApprove = async (resourceId: Id<"uiresources">) => {
     setLoading(true);
     await approveResource({ id: resourceId });
+    setLoading(false);
+  };
+
+  const handleReject = async (resourceId: Id<"uiresources">) => {
+    setLoading(true);
+    await rejectResource({ id: resourceId });
     setLoading(false);
   };
 
@@ -63,6 +70,7 @@ export default function Page() {
           cards={cards}
           loading={loading}
           handleApprove={handleApprove}
+          handleReject={handleReject}
         />
       </div>
 

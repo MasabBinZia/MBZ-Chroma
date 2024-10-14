@@ -14,17 +14,18 @@ import { cn } from "@/lib/utils";
 import { Resource } from "@/types";
 import { Id } from "@/convex/_generated/dataModel";
 
-
 type ResquestedResourcesTableProps = {
   cards: Resource[];
   loading: boolean;
   handleApprove: (id: Id<"uiresources">) => void;
+  handleReject: (id: Id<"uiresources">) => void;
 };
 
 export default function ResquestedResourcesTable({
   cards,
   loading,
   handleApprove,
+  handleReject
 }: ResquestedResourcesTableProps) {
   return (
     <Table className="h-full mt-20">
@@ -45,8 +46,23 @@ export default function ResquestedResourcesTable({
             <TableCell className="font-medium">
               {resource.description}1
             </TableCell>
-            <TableCell><Link href={resource.link} className={cn(buttonVariants({ variant: "link" }),"text-blue-500")}>{resource.link}</Link></TableCell>
-            <TableCell><ReqImageViewer imageUrl={resource.imageUrl} title={resource.title}/></TableCell>
+            <TableCell>
+              <Link
+                href={resource.link}
+                className={cn(
+                  buttonVariants({ variant: "link" }),
+                  "text-blue-500"
+                )}
+              >
+                {resource.link}
+              </Link>
+            </TableCell>
+            <TableCell>
+              <ReqImageViewer
+                imageUrl={resource.imageUrl}
+                title={resource.title}
+              />
+            </TableCell>
             <TableCell>
               <Button
                 onClick={() => handleApprove(resource._id as Id<"uiresources">)}
@@ -54,6 +70,13 @@ export default function ResquestedResourcesTable({
                 className="bg-green-500 text-white px-2 py-1 rounded mr-2 hover:bg-green-600"
               >
                 Approve
+              </Button>
+              <Button
+                onClick={() => handleReject(resource._id as Id<"uiresources">)}
+                disabled={loading}
+                className="bg-red-500 text-white px-2 py-1 rounded mr-2 hover:bg-red-600"
+              >
+                Reject
               </Button>
             </TableCell>
           </TableRow>

@@ -44,5 +44,11 @@ export const approveResource = mutation({
   },
 });
 
+export const rejectResource = mutation({
+  args: { id: v.id("uiresources") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete(args.id);
+  },
+});
 
 
