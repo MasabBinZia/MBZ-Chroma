@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/credenza";
 import { Button } from "./ui/button";
 import ResourceForm from "./ResourceForm";
-import { SignIn, SignInButton, useUser } from "@clerk/nextjs";
+import { SignInButton, useUser } from "@clerk/nextjs";
 import { RainbowButton } from "./ui/rainbow-button";
 
 export default function RequestResourceModal() {

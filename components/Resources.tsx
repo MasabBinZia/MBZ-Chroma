@@ -36,8 +36,10 @@ export default function Resources() {
   const cards =
     resources?.slice(0, visibleCount).map((resource) => ({
       title: resource.title,
-      src: resource.imageUrl,
+      imageUrl: resource.imageUrl,
       link: resource.link,
+      description: resource.description,
+      _id: resource._id,
     })) || [];
 
   if (isLoading) {

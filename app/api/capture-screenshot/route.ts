@@ -8,6 +8,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+type CloudinaryUploadResult = {
+  secure_url: string;
+};
+
 export async function POST(request: Request) {
   try {
     const { url } = await request.json();
@@ -21,16 +25,18 @@ export async function POST(request: Request) {
 
     const buffer = Buffer.from(screenshotResponse.data, "binary");
 
-    const uploadResponse = await new Promise((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream({ folder: "ui-resources" }, (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        })
-        .end(buffer);
-    });
+    const uploadResponse = await new Promise<CloudinaryUploadResult>(
+      (resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream({ folder: "ui-resources" }, (error, result) => {
+            if (error) reject(error);
+            else resolve(result as CloudinaryUploadResult);
+          })
+          .end(buffer);
+      }
+    );
 
-    return NextResponse.json({ imageUrl: (uploadResponse as any).secure_url });
+    return NextResponse.json({ imageUrl: uploadResponse.secure_url });
   } catch (error) {
     console.error("Error in screenshot capture:", error);
     return NextResponse.json(

@@ -11,19 +11,14 @@ import Link from "next/link";
 import ReqImageViewer from "./ReqImageViewer";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { Resource } from "@/types";
+import { Id } from "@/convex/_generated/dataModel";
 
-type  Resource = {
-  title: string;
-  description: string;
-  link: string;
-  imageUrl: string;
-  _id: string;
-}
 
 type ResquestedResourcesTableProps = {
-  cards: any[];
+  cards: Resource[];
   loading: boolean;
-  handleApprove: (id: string) => void;
+  handleApprove: (id: Id<"uiresources">) => void;
 };
 
 export default function ResquestedResourcesTable({
@@ -54,7 +49,7 @@ export default function ResquestedResourcesTable({
             <TableCell><ReqImageViewer imageUrl={resource.imageUrl} title={resource.title}/></TableCell>
             <TableCell>
               <Button
-                onClick={() => handleApprove(resource._id)}
+                onClick={() => handleApprove(resource._id as Id<"uiresources">)}
                 disabled={loading}
                 className="bg-green-500 text-white px-2 py-1 rounded mr-2 hover:bg-green-600"
               >

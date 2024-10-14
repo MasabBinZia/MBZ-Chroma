@@ -6,7 +6,7 @@ export default function ReqImageViewer({ imageUrl, title }: {imageUrl:string,tit
     <PhotoProvider>
       <div className="foo">
         <PhotoView key={title} src={imageUrl}>
-          <img src={imageUrl} alt={title} />
+          {/* <img src={imageUrl} alt={title} /> */}
         </PhotoView>
       </div>
     </PhotoProvider>

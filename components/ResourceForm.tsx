@@ -18,13 +18,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Textarea } from "./ui/textarea";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs";
+
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -39,19 +33,6 @@ const formSchema = z.object({
 });
 
 export default function ResourceForm() {
-  const { isSignedIn } = useUser();
-
-  // if (!isSignedIn) {
-  //   return (
-  //     <>
-  //       <SignedOut>
-  //         <Button className="w-full">
-  //           <SignInButton />
-  //         </Button>
-  //       </SignedOut>
-  //     </>
-  //   );
-  // }
   const addResource = useMutation(api.resources.submitResource);
 
   const form = useForm<z.infer<typeof formSchema>>({

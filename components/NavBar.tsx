@@ -3,7 +3,6 @@ import {
   NavigationMenu,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { BookOpen, Menu } from "lucide-react";
 import Link from "next/link";
 import ModeToggle from "./ModeToggle";
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
@@ -13,7 +12,6 @@ import Image from "next/image";
 
 export function NavBar() {
     const { user } = useUser();
-
 
     const isAuthorized =
     user?.emailAddresses[0]?.emailAddress ===

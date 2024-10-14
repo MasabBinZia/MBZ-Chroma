@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { CardType } from "@/types";
 
 export const Card = React.memo(
   ({
@@ -10,54 +11,48 @@ export const Card = React.memo(
     index,
     hovered,
     setHovered,
-    link
+    link,
   }: {
-    card: any;
+    card: CardType;
     index: number;
     hovered: number | null;
     link: string;
     setHovered: React.Dispatch<React.SetStateAction<number | null>>;
   }) => (
-    <Link  href={link}>
-    <div
-      onMouseEnter={() => setHovered(index)}
-      onMouseLeave={() => setHovered(null)}
-      className={cn(
-        "rounded-lg relative bg-gray-100 dark:bg-neutral-900 overflow-hidden h-[13rem] w-full transition-all duration-300 ease-out",
-        hovered !== null && hovered !== index && "blur-sm scale-[0.98]"
-      )}
-    >
-      <Image
-        src={card.src}
-        alt={card.title}
-        width={1000}
-        height={1000}
-        className="object-cover absolute inset-0 w-full h-full"
-      />
+    <Link href={link}>
       <div
+        onMouseEnter={() => setHovered(index)}
+        onMouseLeave={() => setHovered(null)}
         className={cn(
-          "absolute inset-0 bg-black/50 flex items-end py-8 px-4 transition-opacity duration-300",
-          hovered === index ? "opacity-100" : "opacity-0"
+          "rounded-lg relative bg-gray-100 dark:bg-neutral-900 overflow-hidden h-[13rem] w-full transition-all duration-300 ease-out",
+          hovered !== null && hovered !== index && "blur-sm scale-[0.98]"
         )}
       >
-        <div className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
-          {card.title}
+        <Image
+          src={card.imageUrl}
+          alt={card.title}
+          width={1000}
+          height={1000}
+          className="object-cover absolute inset-0 w-full h-full"
+        />
+        <div
+          className={cn(
+            "absolute inset-0 bg-black/50 flex items-end py-8 px-4 transition-opacity duration-300",
+            hovered === index ? "opacity-100" : "opacity-0"
+          )}
+        >
+          <div className="text-xl md:text-2xl font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200">
+            {card.title}
+          </div>
         </div>
       </div>
-    </div>
     </Link>
   )
 );
 
 Card.displayName = "Card";
 
-type Card = {
-  title: string;
-  src: string;
-  link:string
-};
-
-export function FocusCards({ cards }: { cards: Card[] }) {
+export function FocusCards({ cards }: { cards: CardType[] }) {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
@@ -75,6 +70,3 @@ export function FocusCards({ cards }: { cards: Card[] }) {
     </div>
   );
 }
-
-
-
