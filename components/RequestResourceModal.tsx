@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Credenza,
   CredenzaBody,
@@ -11,29 +13,37 @@ import {
 } from "@/components/ui/credenza";
 import { Button } from "./ui/button";
 import ResourceForm from "./ResourceForm";
-import { useUser } from "@clerk/nextjs";
+import { SignIn, SignInButton, useUser } from "@clerk/nextjs";
+import { RainbowButton } from "./ui/rainbow-button";
 
 export default function RequestResourceModal() {
-    const { user } = useUser();
+  const { user, isSignedIn } = useUser();
   return (
     <Credenza>
       <CredenzaTrigger asChild>
-        <Button >Request Resource</Button>
+        <RainbowButton className="fixed bottom-8 right-2 z-[99] lg:right-16">
+          Request Resource
+        </RainbowButton>
       </CredenzaTrigger>
       <CredenzaContent>
         <CredenzaHeader>
           <CredenzaTitle>Credenza</CredenzaTitle>
-          <CredenzaDescription>
-            Welcome {user?.firstName}
-          </CredenzaDescription>
+          <CredenzaDescription>Welcome {user?.firstName}</CredenzaDescription>
         </CredenzaHeader>
-        <CredenzaBody>
-          <ResourceForm/>
-        </CredenzaBody>
+        <CredenzaBody>{isSignedIn && <ResourceForm />}</CredenzaBody>
         <CredenzaFooter>
-          <CredenzaClose asChild>
-            <Button className="w-full">Close</Button>
-          </CredenzaClose>
+          {!isSignedIn && (
+              <SignInButton>
+                <Button className="w-full">Sign In</Button>
+              </SignInButton>
+            
+          )}
+
+          {isSignedIn && (
+            <CredenzaClose asChild>
+              <Button className="w-full">Close</Button>
+            </CredenzaClose>
+          )}
         </CredenzaFooter>
       </CredenzaContent>
     </Credenza>

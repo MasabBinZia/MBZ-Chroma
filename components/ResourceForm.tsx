@@ -18,7 +18,13 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Textarea } from "./ui/textarea";
-import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -33,14 +39,19 @@ const formSchema = z.object({
 });
 
 export default function ResourceForm() {
-  const { isSignedIn, user } = useUser();
-  if(!isSignedIn) {
-  return <>  <SignedOut>
-  <Button>
-    <SignInButton />
-  </Button>
-</SignedOut></>
-  }
+  const { isSignedIn } = useUser();
+
+  // if (!isSignedIn) {
+  //   return (
+  //     <>
+  //       <SignedOut>
+  //         <Button className="w-full">
+  //           <SignInButton />
+  //         </Button>
+  //       </SignedOut>
+  //     </>
+  //   );
+  // }
   const addResource = useMutation(api.resources.submitResource);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -81,8 +92,6 @@ export default function ResourceForm() {
 
   return (
     <Form {...form}>
-      <div className="flex justify-center items-center">x
-        </div>
       <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-4">
         <FormField
           control={form.control}
@@ -133,11 +142,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button
-      type="submit"
-      className="w-full"
-      disabled={pending}
-    >
+    <Button type="submit" className="w-full" disabled={pending}>
       {pending ? "Submitting..." : "Add Resource"}
     </Button>
   );

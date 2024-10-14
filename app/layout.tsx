@@ -6,6 +6,9 @@ import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NavBar } from "@/components/NavBar";
+import { dark } from '@clerk/themes'
+import RequestResourceModal from "@/components/RequestResourceModal";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,7 +32,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+    appearance={{
+      baseTheme: dark,
+    }}>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -44,6 +50,7 @@ export default function RootLayout({
               >
                 <NavBar/>
                 {children}
+                <RequestResourceModal />
               </ThemeProvider>
             </div>
           </ConvexClientProvider>
