@@ -9,5 +9,6 @@ export default defineSchema({
     imageUrl: v.string(),
     approved: v.boolean(),
     userId: v.string(),
+    requestedBy: v.string(),
   }),
 });

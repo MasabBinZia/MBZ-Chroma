@@ -14,6 +14,7 @@ export const submitResource = mutation({
     link: v.string(),
     imageUrl: v.string(),
     userId:v.string(),
+    requestedBy:v.string(),
   },
   handler: async (ctx, args) => {
     await ctx.db.insert("uiresources", {

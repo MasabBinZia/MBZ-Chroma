@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Textarea } from "./ui/textarea";
+import { useUser } from "@clerk/nextjs";
 
 
 const formSchema = z.object({
@@ -33,6 +34,7 @@ const formSchema = z.object({
 });
 
 export default function ResourceForm() {
+  const { user } = useUser();
   const addResource = useMutation(api.resources.submitResource);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -64,6 +66,7 @@ export default function ResourceForm() {
         ...values,
         imageUrl: capturedImageUrl,
         userId: "",
+        requestedBy: user?.emailAddresses[0]?.emailAddress || "",
       });
       form.reset();
     } catch (error) {
