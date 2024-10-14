@@ -36,8 +36,8 @@ export default function Page() {
         try {
           const response = await axios.post("/api/remove-cloudinary-image", { publicId });
           console.log("Cloudinary deletion response:", response.data);
-        } catch (cloudinaryError: any) {
-          console.error("Error deleting image from Cloudinary:", cloudinaryError.response?.data || cloudinaryError.message);
+        } catch (error) {
+          console.error("Error deleting image from Cloudinary:",error);
         }
       }
   
