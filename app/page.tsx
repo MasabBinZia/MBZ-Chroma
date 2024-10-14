@@ -10,18 +10,14 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Hero } from "@/components/Hero";
 
 export default function Home() {
-  const { user } = useUser();
-
   const resources = useQuery(api.resources.getApprovedResources);
 
-  const isAuthorized =
-    user?.emailAddresses[0]?.emailAddress ===
-    process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-
+ 
   const cards =
     resources?.map((resource) => ({
       title: resource.title,
@@ -30,8 +26,8 @@ export default function Home() {
     })) || [];
 
   return (
-    <main className="absolute inset-0 -z-10 h-full w-full items-center [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]">
-      <div className="flex justify-between items-center">
+    <main className="absolute h-screen w-full">
+      {/* <div className="flex justify-between items-center">
         <RequestResourceModal />
 
         <div className="flex items-center">
@@ -44,12 +40,23 @@ export default function Home() {
           <UserButton />
         </SignedIn>
 
-        {isAuthorized && <Link href={"/admin"} className={buttonVariants()}>Admin</Link>}
         </div>
       
       </div>
-      <h1 className="text-6xl text-white">Hellow</h1>
-      {/* {resources && <FocusCards cards={cards} />} */}
+      <h1 className="text-6xl text-white">Hellow</h1> */}
+ 
+      <Hero/>
+      {/* <div  className="flex justify-center items-center">
+        <SignedOut>
+          <Button>
+            <SignInButton />
+          </Button>
+        </SignedOut>
+        <SignedIn>
+          <RequestResourceModal />
+        </SignedIn>
+      </div> */}
+      {resources && <FocusCards cards={cards} />} 
     </main>
   );
 }
