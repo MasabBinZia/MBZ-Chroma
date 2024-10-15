@@ -8,6 +8,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { NavBar } from "@/components/NavBar";
 import { dark } from '@clerk/themes'
 import RequestResourceModal from "@/components/RequestResourceModal";
+import { Toaster } from 'sonner'
+
 
 
 const geistSans = localFont({
@@ -49,6 +51,7 @@ export default function RootLayout({
                 disableTransitionOnChange
               >
                 <NavBar/>
+                <Toaster  position="top-center" expand={true} richColors />
                 {children}
                 <RequestResourceModal />
               </ThemeProvider>

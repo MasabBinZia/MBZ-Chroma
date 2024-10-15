@@ -19,6 +19,7 @@ import {
 } from "./ui/form";
 import { Textarea } from "./ui/textarea";
 import { useUser } from "@clerk/nextjs";
+import { toast } from "sonner";
 
 
 const formSchema = z.object({
@@ -69,8 +70,10 @@ export default function ResourceForm() {
         requestedBy: user?.emailAddresses[0]?.emailAddress || "",
       });
       form.reset();
+      toast.success("Resource Requested Successfully");
     } catch (error) {
       console.error("Error submitting resource:", error);
+      toast.error("Error submitting resource");
     }
   }
 

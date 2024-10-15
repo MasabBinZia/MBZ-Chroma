@@ -43,7 +43,7 @@ export default function ResquestedResourcesTable({
         {cards.map((resource: Resource) => (
           <TableRow key={resource._id}>
             <TableCell>{resource.title}</TableCell>
-            <TableCell>{resource.description}</TableCell>
+            <TableCell className="w-[300px] line-clamp-1">{resource.description}</TableCell>
             <TableCell>
               <Link
                 href={resource.link}
