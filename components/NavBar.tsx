@@ -22,7 +22,7 @@ export function NavBar() {
     <div className="flex items-center min-w-full w-full fixed justify-center p-2 z-10">
       <div className="flex justify-between md:w-[620px] w-[95%] mt-[1rem] border border-gray-400 dark:border-zinc-900 dark:bg-black  relative  bg-white border-opacity-20 rounded-xl p-2 shadow-lg">
         <NavigationMenu>
-          <NavigationMenuList className="max-[825px]:hidden ">
+          <NavigationMenuList className="">
             <Link href="/" className="pl-2 flex items-center gap-1 text-xl font-bold">
              <Image src={"/logo.png"} width={30} height={30} alt="mbz-choroma"/>
             </Link>
