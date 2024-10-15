@@ -25,18 +25,26 @@ export default function RequestResourceModal() {
           Request Resource
         </RainbowButton>
       </CredenzaTrigger>
-      <CredenzaContent className="bg-background">
+      <CredenzaContent className="bg-white dark:bg-background">
         <CredenzaHeader>
-          <CredenzaTitle>Credenza</CredenzaTitle>
-          <CredenzaDescription>Welcome {user?.firstName}</CredenzaDescription>
+          <CredenzaTitle>Request Resource</CredenzaTitle>
+          {isSignedIn ? (
+            <CredenzaDescription className="text-lg">
+              Welcome <span className="bg-clip-text text-transparent text-center bg-gradient-to-b from-[#F5AF19] to-[#F12711] font-sans font-bold tracking-tight">{user?.firstName}!</span> <br />
+              Please fill the form to request a resource.
+            </CredenzaDescription>
+          ) : (
+            <CredenzaDescription>
+              Sign In to request a resource
+            </CredenzaDescription>
+          )}
         </CredenzaHeader>
         <CredenzaBody>{isSignedIn && <ResourceForm />}</CredenzaBody>
         <CredenzaFooter>
           {!isSignedIn && (
-              <SignInButton>
-                <Button className="w-full">Sign In</Button>
-              </SignInButton>
-            
+            <SignInButton>
+              <Button className="w-full">Sign In</Button>
+            </SignInButton>
           )}
 
           {isSignedIn && (
