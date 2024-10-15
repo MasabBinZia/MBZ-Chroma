@@ -6,7 +6,6 @@ import { z } from "zod";
 import { useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
 import axios from "axios";
-import { useFormStatus } from "react-dom";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import {
@@ -20,7 +19,6 @@ import {
 import { Textarea } from "./ui/textarea";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
-
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -79,7 +77,7 @@ export default function ResourceForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="title"
@@ -119,18 +117,16 @@ export default function ResourceForm() {
             </FormItem>
           )}
         />
-        <SubmitButton />
+        <SubmitButton isSubmitting={form.formState.isSubmitting} />
       </form>
     </Form>
   );
 }
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
+function SubmitButton({ isSubmitting }: { isSubmitting: boolean }) {
   return (
-    <Button type="submit" className="w-full" disabled={pending}>
-      {pending ? "Submitting..." : "Add Resource"}
+    <Button type="submit" className="w-full" disabled={isSubmitting}>
+      {isSubmitting ? "Submitting..." : "Add Resource"}
     </Button>
   );
 }
