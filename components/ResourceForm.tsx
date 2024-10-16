@@ -73,12 +73,9 @@ export default function ResourceForm() {
       form.reset();
       toast.success("Resource Requested Successfully");
     } catch (error) {
-      const errorMessage = error instanceof ConvexError
-        ? (error.data as { message: string }).message
-        : "Unexpected error occurred";
+      const errorMessage =
+        error instanceof ConvexError ? error.data : "Unexpected error occurred";
       toast.error(errorMessage);
-      console.log(errorMessage,"ERROR");
-      console.error("Error submitting resource:", error);
     }
   }
   return (
