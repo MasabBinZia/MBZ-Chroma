@@ -60,9 +60,10 @@ export default function ResourceForm() {
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    let capturedImageUrl = "";
     try {
       const trimmedLink = values.link.replace(/\/$/, "");
-      const capturedImageUrl = await captureAndUploadScreenshot(trimmedLink);
+      capturedImageUrl = await captureAndUploadScreenshot(trimmedLink);
       await addResource({
         ...values,
         imageUrl: capturedImageUrl,
@@ -76,8 +77,22 @@ export default function ResourceForm() {
       const errorMessage =
         error instanceof ConvexError ? error.data : "Unexpected error occurred";
       toast.error(errorMessage);
+      if (errorMessage === "A resource with this link already exists.") {
+        try {
+          const urlParts = capturedImageUrl.split("/");
+          const publicId = urlParts[urlParts.length - 1].split(".")[0];
+          await axios.post("/api/remove-cloudinary-image", { publicId });
+          console.log("Cloudinary image deleted successfully");
+        } catch (cloudinaryError) {
+          console.error(
+            "Error deleting image from Cloudinary:",
+            cloudinaryError
+          );
+        }
+      }
     }
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
