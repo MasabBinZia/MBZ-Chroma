@@ -19,6 +19,7 @@ import {
 import { Textarea } from "./ui/textarea";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
+import { ConvexError } from "convex/values";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -60,21 +61,26 @@ export default function ResourceForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const capturedImageUrl = await captureAndUploadScreenshot(values.link);
+      const trimmedLink = values.link.replace(/\/$/, "");
+      const capturedImageUrl = await captureAndUploadScreenshot(trimmedLink);
       await addResource({
         ...values,
         imageUrl: capturedImageUrl,
+        link: trimmedLink,
         userId: "",
         requestedBy: user?.emailAddresses[0]?.emailAddress || "",
       });
       form.reset();
       toast.success("Resource Requested Successfully");
     } catch (error) {
+      const errorMessage = error instanceof ConvexError
+        ? (error.data as { message: string }).message
+        : "Unexpected error occurred";
+      toast.error(errorMessage);
+      console.log(errorMessage,"ERROR");
       console.error("Error submitting resource:", error);
-      toast.error("Error submitting resource");
     }
   }
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

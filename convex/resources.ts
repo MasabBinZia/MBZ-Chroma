@@ -1,5 +1,5 @@
 import { mutation, query } from "./_generated/server";
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 
 export const getResources = query({
   handler: async (ctx) => {
@@ -13,10 +13,19 @@ export const submitResource = mutation({
     description: v.string(),
     link: v.string(),
     imageUrl: v.string(),
-    userId:v.string(),
-    requestedBy:v.string(),
+    userId: v.string(),
+    requestedBy: v.string(),
   },
   handler: async (ctx, args) => {
+    const existingResource = await ctx.db
+      .query("uiresources")
+      .filter((q) => q.eq(q.field("link"), args.link))
+      .first();
+
+    if (existingResource) {
+      throw new ConvexError("A resource with this link already exists.");
+    }
+
     await ctx.db.insert("uiresources", {
       ...args,
       approved: false,
@@ -24,16 +33,21 @@ export const submitResource = mutation({
   },
 });
 
-
 export const getApprovedResources = query({
   handler: async (ctx) => {
-    return await ctx.db.query("uiresources").filter((q) => q.eq(q.field("approved"), true)).collect();
+    return await ctx.db
+      .query("uiresources")
+      .filter((q) => q.eq(q.field("approved"), true))
+      .collect();
   },
 });
 
 export const getUnApprovedResources = query({
   handler: async (ctx) => {
-    return await ctx.db.query("uiresources").filter((q) => q.eq(q.field("approved"), false)).collect();
+    return await ctx.db
+      .query("uiresources")
+      .filter((q) => q.eq(q.field("approved"), false))
+      .collect();
   },
 });
 
@@ -50,5 +64,3 @@ export const rejectResource = mutation({
     await ctx.db.delete(args.id);
   },
 });
-
-
