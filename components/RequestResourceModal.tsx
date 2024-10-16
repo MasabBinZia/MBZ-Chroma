@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Credenza,
@@ -10,11 +10,11 @@ import {
   CredenzaHeader,
   CredenzaTitle,
   CredenzaTrigger,
-} from "@/components/ui/credenza";
-import { Button } from "./ui/button";
-import ResourceForm from "./ResourceForm";
-import { SignInButton, useUser } from "@clerk/nextjs";
-import { RainbowButton } from "./ui/rainbow-button";
+} from '@/components/ui/credenza';
+import { Button } from './ui/button';
+import ResourceForm from './ResourceForm';
+import { SignInButton, useUser } from '@clerk/nextjs';
+import { RainbowButton } from './ui/rainbow-button';
 
 export default function RequestResourceModal() {
   const { user, isSignedIn } = useUser();
@@ -30,7 +30,11 @@ export default function RequestResourceModal() {
           <CredenzaTitle>Request Resource</CredenzaTitle>
           {isSignedIn ? (
             <CredenzaDescription className="text-lg">
-              Welcome <span className="bg-clip-text text-transparent text-center bg-gradient-to-b from-[#F5AF19] to-[#F12711] font-sans font-bold tracking-tight">{user?.firstName}!</span> <br />
+              Welcome{' '}
+              <span className="bg-gradient-to-b from-[#F5AF19] to-[#F12711] bg-clip-text text-center font-sans font-bold tracking-tight text-transparent">
+                {user?.firstName}!
+              </span>{' '}
+              <br />
               Please fill the form to request a resource.
             </CredenzaDescription>
           ) : (

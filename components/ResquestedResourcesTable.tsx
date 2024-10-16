@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Table,
   TableBody,
@@ -7,18 +7,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
-import Link from "next/link";
+} from './ui/table';
+import Link from 'next/link';
 // import ReqImageViewer from "./ReqImageViewer";
-import { Button } from "./ui/button";
-import { Resource } from "@/types";
-import { Id } from "@/convex/_generated/dataModel";
+import { Button } from './ui/button';
+import { Resource } from '@/types';
+import { Id } from '@/convex/_generated/dataModel';
 
 type ResquestedResourcesTableProps = {
   cards: Resource[];
   loading: boolean;
-  handleApprove: (id: Id<"uiresources">) => void;
-  handleReject: (id: Id<"uiresources">) => void;
+  handleApprove: (id: Id<'uiresources'>) => void;
+  handleReject: (id: Id<'uiresources'>) => void;
 };
 
 export default function ResquestedResourcesTable({
@@ -32,7 +32,7 @@ export default function ResquestedResourcesTable({
       <TableCaption>A list of your UnApproved UI Resources</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead >Title</TableHead>
+          <TableHead>Title</TableHead>
           <TableHead>Description</TableHead>
           <TableHead>Link</TableHead>
           <TableHead>Image</TableHead>
@@ -43,7 +43,9 @@ export default function ResquestedResourcesTable({
         {cards.map((resource: Resource) => (
           <TableRow key={resource._id}>
             <TableCell>{resource.title}</TableCell>
-            <TableCell className="w-[300px] line-clamp-1">{resource.description}</TableCell>
+            <TableCell className="line-clamp-1 w-[300px]">
+              {resource.description}
+            </TableCell>
             <TableCell>
               <Link
                 href={resource.link}
@@ -59,16 +61,16 @@ export default function ResquestedResourcesTable({
             </TableCell>
             <TableCell>
               <Button
-                onClick={() => handleApprove(resource._id as Id<"uiresources">)}
+                onClick={() => handleApprove(resource._id as Id<'uiresources'>)}
                 disabled={loading}
-                className="bg-green-500 text-white px-2 py-1 rounded mr-2 hover:bg-green-600"
+                className="mr-2 rounded bg-green-500 px-2 py-1 text-white hover:bg-green-600"
               >
                 Approve
               </Button>
               <Button
-                onClick={() => handleReject(resource._id as Id<"uiresources">)}
+                onClick={() => handleReject(resource._id as Id<'uiresources'>)}
                 disabled={loading}
-                className="bg-red-500 text-white px-2 py-1 rounded mr-2 hover:bg-red-600"
+                className="mr-2 rounded bg-red-500 px-2 py-1 text-white hover:bg-red-600"
               >
                 Reject
               </Button>

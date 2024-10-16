@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "../convex/_generated/api";
-import { FocusCards } from "@/components/ui/focus-cards";
-import { useInView } from "react-intersection-observer";
-import SkeletonLoader from "@/components/SkeletonLoader";
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'convex/react';
+import { api } from '../convex/_generated/api';
+import { FocusCards } from '@/components/ui/focus-cards';
+import { useInView } from 'react-intersection-observer';
+import SkeletonLoader from '@/components/SkeletonLoader';
 
 export default function Resources() {
   const [visibleCount, setVisibleCount] = useState(6);
@@ -52,7 +52,7 @@ export default function Resources() {
 
   if (resources?.length === 0) {
     return (
-      <div className="flex justify-center items-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <p className="text-gray-500">No resources found.</p>
       </div>
     );
@@ -67,7 +67,7 @@ export default function Resources() {
             ref={scrollTrigger}
             onClick={handleLoadMore}
             disabled={loading}
-            className="h-10 mt-4"
+            className="mt-4 h-10"
           >
             {/* {loading ? 'Loading more...' : 'Load More'} */}
           </button>

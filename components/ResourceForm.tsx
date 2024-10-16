@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useMutation } from "convex/react";
-import { api } from "../convex/_generated/api";
-import axios from "axios";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { useMutation } from 'convex/react';
+import { api } from '../convex/_generated/api';
+import axios from 'axios';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
 import {
   Form,
   FormControl,
@@ -15,22 +15,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Textarea } from "./ui/textarea";
-import { useUser } from "@clerk/nextjs";
-import { toast } from "sonner";
-import { ConvexError } from "convex/values";
-import { Loader2 } from "lucide-react";
+} from './ui/form';
+import { Textarea } from './ui/textarea';
+import { useUser } from '@clerk/nextjs';
+import { toast } from 'sonner';
+import { ConvexError } from 'convex/values';
+import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   title: z.string().min(2, {
-    message: "Title must be at least 2 characters.",
+    message: 'Title must be at least 2 characters.',
   }),
   description: z.string().min(10, {
-    message: "Description must be at least 10 characters.",
+    message: 'Description must be at least 10 characters.',
   }),
   link: z.string().url({
-    message: "Please enter a valid URL.",
+    message: 'Please enter a valid URL.',
   }),
 });
 
@@ -41,53 +41,53 @@ export default function ResourceForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      link: "",
+      title: '',
+      description: '',
+      link: '',
     },
   });
 
   const captureAndUploadScreenshot = async (url: string) => {
     try {
-      const response = await axios.post("/api/capture-screenshot", { url });
+      const response = await axios.post('/api/capture-screenshot', { url });
       if (!response.data.imageUrl) {
-        throw new Error("Failed to capture and upload screenshot");
+        throw new Error('Failed to capture and upload screenshot');
       }
       return response.data.imageUrl;
     } catch (error) {
-      console.error("Error capturing and uploading screenshot:", error);
+      console.error('Error capturing and uploading screenshot:', error);
       throw error;
     }
   };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    let capturedImageUrl = "";
+    let capturedImageUrl = '';
     try {
-      const trimmedLink = values.link.replace(/\/$/, "");
+      const trimmedLink = values.link.replace(/\/$/, '');
       capturedImageUrl = await captureAndUploadScreenshot(trimmedLink);
       await addResource({
         ...values,
         imageUrl: capturedImageUrl,
         link: trimmedLink,
-        userId: "",
-        requestedBy: user?.emailAddresses[0]?.emailAddress || "",
+        userId: '',
+        requestedBy: user?.emailAddresses[0]?.emailAddress || '',
       });
       form.reset();
-      toast.success("Resource Requested Successfully");
+      toast.success('Resource Requested Successfully');
     } catch (error) {
       const errorMessage =
-        error instanceof ConvexError ? error.data : "Unexpected error occurred";
+        error instanceof ConvexError ? error.data : 'Unexpected error occurred';
       toast.error(errorMessage);
-      if (errorMessage === "A resource with this link already exists.") {
+      if (errorMessage === 'A resource with this link already exists.') {
         try {
-          const urlParts = capturedImageUrl.split("/");
-          const publicId = urlParts[urlParts.length - 1].split(".")[0];
-          await axios.post("/api/remove-cloudinary-image", { publicId });
-          console.log("Cloudinary image deleted successfully");
+          const urlParts = capturedImageUrl.split('/');
+          const publicId = urlParts[urlParts.length - 1].split('.')[0];
+          await axios.post('/api/remove-cloudinary-image', { publicId });
+          console.log('Cloudinary image deleted successfully');
         } catch (cloudinaryError) {
           console.error(
-            "Error deleting image from Cloudinary:",
-            cloudinaryError
+            'Error deleting image from Cloudinary:',
+            cloudinaryError,
           );
         }
       }
@@ -147,11 +147,11 @@ function SubmitButton({ isSubmitting }: { isSubmitting: boolean }) {
     <Button type="submit" className="w-full" disabled={isSubmitting}>
       {isSubmitting ? (
         <span className="flex items-center gap-1">
-          <Loader2 className="animate-spin h-4 w-4" />
+          <Loader2 className="h-4 w-4 animate-spin" />
           Submitting...
         </span>
       ) : (
-        "Add Resource"
+        'Add Resource'
       )}
     </Button>
   );
