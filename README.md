@@ -1,5 +1,5 @@
 <p>
-  <img src="https://github.com/user-attachments/assets/9ae5ad5e-04ba-48aa-a2e7-9c94567b6b49" alt="MBZ Choroma" width="100" height="100">
+  <img src="https://github.com/user-attachments/assets/9ae5ad5e-04ba-48aa-a2e7-9c94567b6b49" alt="MBZ Chroma" width="100" height="100">
 </p>
 
 
