@@ -20,6 +20,7 @@ import { Textarea } from "./ui/textarea";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { ConvexError } from "convex/values";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -144,7 +145,14 @@ export default function ResourceForm() {
 function SubmitButton({ isSubmitting }: { isSubmitting: boolean }) {
   return (
     <Button type="submit" className="w-full" disabled={isSubmitting}>
-      {isSubmitting ? "Submitting..." : "Add Resource"}
+      {isSubmitting ? (
+        <span className="flex items-center gap-1">
+          <Loader2 className="animate-spin h-4 w-4" />
+          Submitting...
+        </span>
+      ) : (
+        "Add Resource"
+      )}
     </Button>
   );
 }
