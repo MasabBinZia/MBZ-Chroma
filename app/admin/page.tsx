@@ -6,9 +6,10 @@ import React from "react";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import ResquestedResourcesTable from "@/components/ResquestedResourcesTable";
 import { Id } from "@/convex/_generated/dataModel";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function Page() {
   const { user } = useUser();
@@ -26,21 +27,25 @@ export default function Page() {
   const handleReject = async (resourceId: Id<"uiresources">) => {
     try {
       setLoading(true);
-  
-      const resourceToReject = unApprovedResources?.find((resource) => resource._id === resourceId);
-  
+
+      const resourceToReject = unApprovedResources?.find(
+        (resource) => resource._id === resourceId
+      );
+
       if (resourceToReject?.imageUrl) {
         const urlParts = resourceToReject.imageUrl.split("/");
         const publicId = urlParts[urlParts.length - 1].split(".")[0];
-  
+
         try {
-          const response = await axios.post("/api/remove-cloudinary-image", { publicId });
+          const response = await axios.post("/api/remove-cloudinary-image", {
+            publicId,
+          });
           console.log("Cloudinary deletion response:", response.data);
         } catch (error) {
-          console.error("Error deleting image from Cloudinary:",error);
+          console.error("Error deleting image from Cloudinary:", error);
         }
       }
-  
+
       await rejectResource({ id: resourceId });
     } catch (error) {
       console.error("Error rejecting resource:", error);
@@ -55,15 +60,14 @@ export default function Page() {
 
   if (!isAuthorized) {
     return (
-      <div>
-        Unauthorized access
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-      </div>
+      <h2 className="text-4xl flex flex-col justify-center items-center text-center h-screen">
+        😔 Your are not Admin <br />
+        <span className="text-foreground">
+          <Link href={"/"} className={buttonVariants({ variant: "link" })}>
+            Back to Home
+          </Link>
+        </span>
+      </h2>
     );
   }
 

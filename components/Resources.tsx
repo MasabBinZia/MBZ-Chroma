@@ -44,7 +44,7 @@ export default function Resources() {
 
   if (isLoading) {
     return (
-      <main className="absolute h-screen w-full">
+      <main className="h-screen w-full">
         <SkeletonLoader />
       </main>
     );

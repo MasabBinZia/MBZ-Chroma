@@ -6,11 +6,9 @@ import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NavBar } from "@/components/NavBar";
-import { dark } from '@clerk/themes'
+import { dark } from "@clerk/themes";
 import RequestResourceModal from "@/components/RequestResourceModal";
-import { Toaster } from 'sonner'
-
-
+import { Toaster } from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,9 +33,10 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
-    appearance={{
-      baseTheme: dark,
-    }}>
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -50,8 +49,8 @@ export default function RootLayout({
                 enableSystem
                 disableTransitionOnChange
               >
-                <NavBar/>
-                <Toaster  position="top-center" expand={true} richColors />
+                <NavBar />
+                <Toaster position="top-center" expand={true} richColors />
                 {children}
                 <RequestResourceModal />
               </ThemeProvider>
