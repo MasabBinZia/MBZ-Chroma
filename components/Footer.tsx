@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Balancer from 'react-wrap-balancer';
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Globe, Linkedin } from 'lucide-react';
 import { Section, Container } from '@/components/craft';
 import Logo from '@/public/logo.svg';
 import { buttonVariants } from './ui/button';
@@ -14,7 +14,7 @@ export default function Footer() {
         <Container className="grid gap-6">
           <div className="not-prose flex flex-col gap-6">
             <Link href="/">
-              <h3 className="sr-only">brijr/components</h3>
+              <h3 className="sr-only">MBZ Chroma</h3>
               <Image
                 src={Logo}
                 alt="Logo"
@@ -34,7 +34,8 @@ export default function Footer() {
         <Container className="not-prose flex flex-col justify-between gap-6 border-t md:flex-row md:items-center md:gap-2">
           <div className="flex gap-2">
             <Link
-              href={'https://github.com/MasabBinZia'}
+              target="_blank"
+              href={'https://github.com/MasabBinZia/MBZ-Chroma.git'}
               className={cn(
                 buttonVariants({ variant: 'outline', size: 'icon' }),
                 'h-10 w-10',
@@ -42,10 +43,8 @@ export default function Footer() {
             >
               <Github className="h-5 w-5" />
             </Link>
-            {/* <Link href={""} className={cn(buttonVariants({variant:"outline",size:"icon"}),"h-10 w-10")}>
-              <Twitter className="h-5 w-5" />
-            </Link> */}
             <Link
+              target="_blank"
               href={'https://www.linkedin.com/in/masabbinzia'}
               className={cn(
                 buttonVariants({ variant: 'outline', size: 'icon' }),
@@ -53,6 +52,16 @@ export default function Footer() {
               )}
             >
               <Linkedin className="h-5 w-5" />
+            </Link>
+            <Link
+              target="_blank"
+              href={'https://masab-mbz-portfolio.vercel.app'}
+              className={cn(
+                buttonVariants({ variant: 'outline', size: 'icon' }),
+                'h-10 w-10',
+              )}
+            >
+              <Globe className="h-5 w-5" />
             </Link>
           </div>
           <p className="text-muted-foreground">Made with ❤️ by Masab Bin Zia</p>
