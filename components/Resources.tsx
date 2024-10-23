@@ -6,6 +6,7 @@ import { api } from '../convex/_generated/api';
 import { FocusCards } from '@/components/ui/focus-cards';
 import { useInView } from 'react-intersection-observer';
 import SkeletonLoader from '@/components/SkeletonLoader';
+// import { SearchFilter } from './SearchFilter';
 
 export default function Resources() {
   const [visibleCount, setVisibleCount] = useState(6);
@@ -60,6 +61,7 @@ export default function Resources() {
 
   return (
     <section>
+      {/* <div className='flex justify-center mb-8'><SearchFilter/></div> */}
       <FocusCards cards={cards} />
       {hasMoreData && (
         <div className="flex justify-center pt-4">
