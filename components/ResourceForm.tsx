@@ -16,11 +16,25 @@ import {
   FormLabel,
   FormMessage,
 } from './ui/form';
+import {
+  MultiSelect,
+  MultiSelectContent,
+  MultiSelectEmpty,
+  MultiSelectList,
+  type MultiSelectOption,
+  MultiSelectSearch,
+  MultiSelectTrigger,
+  MultiSelectValue,
+  renderMultiSelectOptions,
+} from '@/components/ui/multi-select';
+
 import { Textarea } from './ui/textarea';
 import { useUser } from '@clerk/nextjs';
 import { toast } from 'sonner';
 import { ConvexError } from 'convex/values';
 import { Loader2 } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { ALL_ITEMS, group, search } from '@/lib/utils';
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -32,11 +46,30 @@ const formSchema = z.object({
   link: z.string().url({
     message: 'Please enter a valid URL.',
   }),
+  tags: z.array(z.string(), {
+    required_error: 'Please select at least one tag.',
+  }),
 });
 
 export default function ResourceForm() {
   const { user } = useUser();
   const addResource = useMutation(api.resources.submitResource);
+  const [loading, setLoading] = useState(false);
+  const [options, setOptions] = useState<MultiSelectOption[]>(() =>
+    group(ALL_ITEMS),
+  );
+
+  const indexRef = useRef(0);
+
+  const handleSearch = async (keyword: string) => {
+    const index = ++indexRef.current;
+    setLoading(true);
+    const newOptions = await search(keyword);
+    if (indexRef.current === index) {
+      setOptions(newOptions);
+      setLoading(false);
+    }
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,6 +77,7 @@ export default function ResourceForm() {
       title: '',
       description: '',
       link: '',
+      tags: [],
     },
   });
 
@@ -71,6 +105,8 @@ export default function ResourceForm() {
         link: trimmedLink,
         userId: '',
         requestedBy: user?.emailAddresses[0]?.emailAddress || '',
+        submittedBy: user?.fullName || '',
+        submittedByPfp: user?.imageUrl || '',
       });
       form.reset();
       toast.success('Resource Requested Successfully');
@@ -132,6 +168,36 @@ export default function ResourceForm() {
               <FormControl>
                 <Input type="url" placeholder="Enter URL" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tags</FormLabel>
+              <MultiSelect
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                onSearch={(keyword) => handleSearch(keyword ?? '')}
+              >
+                <FormControl>
+                  <MultiSelectTrigger className="h-10">
+                    <MultiSelectValue placeholder="Select tags" />
+                  </MultiSelectTrigger>
+                </FormControl>
+                <MultiSelectContent>
+                  <MultiSelectSearch />
+                  <MultiSelectList>
+                    {loading ? null : renderMultiSelectOptions(options)}
+                    <MultiSelectEmpty>
+                      {loading ? 'Loading...' : 'No results found'}
+                    </MultiSelectEmpty>
+                  </MultiSelectList>
+                </MultiSelectContent>
+              </MultiSelect>
               <FormMessage />
             </FormItem>
           )}

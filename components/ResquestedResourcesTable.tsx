@@ -55,10 +55,7 @@ export default function ResquestedResourcesTable({
                 {resource.link}
               </Link>
             </TableCell>
-            <TableCell>
-              {/* <ReqImageViewer url={resource.image} /> */}
-              img
-            </TableCell>
+            <TableCell>img </TableCell>
             <TableCell>
               <Button
                 onClick={() => handleApprove(resource._id as Id<'uiresources'>)}

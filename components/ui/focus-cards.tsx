@@ -52,6 +52,9 @@ export const Card = React.memo(
         link={card.link}
         imgUrl={card.imageUrl}
         requestBy={'Requested by '}
+        submittedByPfp={card.submittedByPfp}
+        tags={card.tags || []}
+        submittedBy={card.submittedBy}
       />
     </>
   ),

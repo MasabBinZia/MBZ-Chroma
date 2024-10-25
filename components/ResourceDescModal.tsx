@@ -12,7 +12,8 @@ import { SquareArrowOutUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { buttonVariants } from './ui/button';
-import { cn } from '@/lib/utils';
+import { capitalizeFirstLetter, cn } from '@/lib/utils';
+import { Badge } from './ui/badge';
 
 type ResourceDescModalProps = {
   trigger: React.ReactNode;
@@ -21,6 +22,9 @@ type ResourceDescModalProps = {
   imgUrl: string;
   requestBy: string;
   link: string;
+  submittedByPfp: string | undefined;
+  tags: string[];
+  submittedBy: string | undefined;
 };
 
 export default function ResourceDescModal({
@@ -29,14 +33,16 @@ export default function ResourceDescModal({
   description,
   imgUrl,
   link,
-  requestBy,
+  submittedByPfp,
+  submittedBy,
+  tags,
 }: ResourceDescModalProps) {
   return (
     <Credenza>
       <CredenzaTrigger asChild className="cursor-pointer">
         {trigger}
       </CredenzaTrigger>
-      <CredenzaContent>
+      <CredenzaContent className="bg-white dark:bg-background">
         <CredenzaHeader>
           <CredenzaTitle className="bg-gradient-to-b from-[#F5AF19] to-[#F12711] bg-clip-text py-2 text-center font-sans text-4xl font-bold tracking-tight text-transparent">
             {title}
@@ -46,9 +52,10 @@ export default function ResourceDescModal({
           </CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody>
-          <div className="flex justify-between py-2">
-            {' '}
-            <span className="text-transparent">{requestBy}</span>
+          <div className="flex flex-wrap justify-center gap-1 pb-2">
+            {tags?.map((tag) => (
+              <Badge key={tag}>{capitalizeFirstLetter(tag)}</Badge>
+            ))}{' '}
           </div>
           <Image
             src={imgUrl}
@@ -58,6 +65,20 @@ export default function ResourceDescModal({
             className="rounded-lg"
           />
         </CredenzaBody>
+        <div className="flex items-center gap-1">
+          <img
+            src={submittedByPfp}
+            alt={submittedBy}
+            className="h-8 w-8 rounded-full border dark:border-white dark:bg-white"
+          />
+          <p>
+            Submitted By -{' '}
+            <span className="bg-gradient-to-b from-[#F5AF19] to-[#F12711] bg-clip-text py-2 text-center font-sans text-lg font-bold tracking-tight text-transparent">
+              {submittedByPfp ? submittedBy : 'Admin'}
+            </span>
+          </p>
+        </div>
+
         <CredenzaFooter>
           <Link
             href={link}

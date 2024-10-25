@@ -73,11 +73,15 @@ export default function Page() {
 
   const cards =
     unApprovedResources?.map((resource) => ({
-      _id: resource._id,
       title: resource.title,
       imageUrl: resource.imageUrl,
       link: resource.link,
       description: resource.description,
+      _id: resource._id,
+      requestedBy: resource.requestedBy,
+      submittedBy: resource.submittedBy,
+      submittedByPfp: resource.submittedByPfp,
+      tags: resource.tags,
     })) || [];
 
   return (

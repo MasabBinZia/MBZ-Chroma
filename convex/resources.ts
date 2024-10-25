@@ -1,9 +1,9 @@
-import { mutation, query } from "./_generated/server";
-import { ConvexError, v } from "convex/values";
+import { mutation, query } from './_generated/server';
+import { ConvexError, v } from 'convex/values';
 
 export const getResources = query({
   handler: async (ctx) => {
-    return await ctx.db.query("uiresources").collect();
+    return await ctx.db.query('uiresources').collect();
   },
 });
 
@@ -15,18 +15,21 @@ export const submitResource = mutation({
     imageUrl: v.string(),
     userId: v.string(),
     requestedBy: v.string(),
+    submittedBy: v.optional(v.string()),
+    submittedByPfp: v.optional(v.string()),
+    tags: v.array(v.string()),
   },
   handler: async (ctx, args) => {
     const existingResource = await ctx.db
-      .query("uiresources")
-      .filter((q) => q.eq(q.field("link"), args.link))
+      .query('uiresources')
+      .filter((q) => q.eq(q.field('link'), args.link))
       .first();
 
     if (existingResource) {
-      throw new ConvexError("A resource with this link already exists.");
+      throw new ConvexError('A resource with this link already exists.');
     }
 
-    await ctx.db.insert("uiresources", {
+    await ctx.db.insert('uiresources', {
       ...args,
       approved: false,
     });
@@ -36,8 +39,8 @@ export const submitResource = mutation({
 export const getApprovedResources = query({
   handler: async (ctx) => {
     return await ctx.db
-      .query("uiresources")
-      .filter((q) => q.eq(q.field("approved"), true))
+      .query('uiresources')
+      .filter((q) => q.eq(q.field('approved'), true))
       .collect();
   },
 });
@@ -45,21 +48,21 @@ export const getApprovedResources = query({
 export const getUnApprovedResources = query({
   handler: async (ctx) => {
     return await ctx.db
-      .query("uiresources")
-      .filter((q) => q.eq(q.field("approved"), false))
+      .query('uiresources')
+      .filter((q) => q.eq(q.field('approved'), false))
       .collect();
   },
 });
 
 export const approveResource = mutation({
-  args: { id: v.id("uiresources") },
+  args: { id: v.id('uiresources') },
   handler: async (ctx, args) => {
     await ctx.db.patch(args.id, { approved: true });
   },
 });
 
 export const rejectResource = mutation({
-  args: { id: v.id("uiresources") },
+  args: { id: v.id('uiresources') },
   handler: async (ctx, args) => {
     await ctx.db.delete(args.id);
   },
