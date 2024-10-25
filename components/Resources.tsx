@@ -7,21 +7,34 @@ import { FocusCards } from '@/components/ui/focus-cards';
 import { useInView } from 'react-intersection-observer';
 import SkeletonLoader from '@/components/SkeletonLoader';
 import { SearchFilter } from './SearchFilter';
+import { Button } from './ui/button';
 
 export default function Resources() {
   const [visibleCount, setVisibleCount] = useState(6);
   const [loading, setLoading] = useState(false);
   const [hasMoreData, setHasMoreData] = useState(true);
   const [scrollTrigger, isInView] = useInView();
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const resources = useQuery(api.resources.getApprovedResources);
 
   const isLoading = resources === undefined;
 
+  const filteredResources = resources?.filter(
+    (resource) =>
+      selectedFilters.length === 0 ||
+      resource.tags?.some((tag) => selectedFilters.includes(tag)),
+  );
+
   const handleLoadMore = () => {
     setLoading(true);
     setVisibleCount((prevCount) => prevCount + 6);
     setLoading(false);
+  };
+
+  const handleResetFilters = () => {
+    setSelectedFilters([]);
+    setVisibleCount(6);
   };
 
   useEffect(() => {
@@ -31,11 +44,16 @@ export default function Resources() {
   }, [isInView, hasMoreData, loading]);
 
   useEffect(() => {
-    setHasMoreData(visibleCount < (resources?.length || 0));
-  }, [visibleCount, resources]);
+    setHasMoreData(visibleCount < (filteredResources?.length || 0));
+  }, [visibleCount, filteredResources]);
+
+  const handleFilterChange = (filters: string[]) => {
+    setSelectedFilters(filters);
+    setVisibleCount(6);
+  };
 
   const cards =
-    resources?.slice(0, visibleCount).map((resource) => ({
+    filteredResources?.slice(0, visibleCount).map((resource) => ({
       title: resource.title,
       imageUrl: resource.imageUrl,
       link: resource.link,
@@ -55,18 +73,21 @@ export default function Resources() {
     );
   }
 
-  if (resources?.length === 0) {
+  if (filteredResources?.length === 0) {
     return (
-      <div className="flex h-64 items-center justify-center">
-        <p className="text-gray-500">No resources found.</p>
-      </div>
+      <h2 className="flex h-screen flex-col text-center text-4xl">
+        😔 Not resources found <br />
+        <span className="text-foreground">
+          <Button onClick={handleResetFilters}>Reset Filters</Button>
+        </span>
+      </h2>
     );
   }
 
   return (
     <section>
       <div className="mb-8 flex justify-center">
-        <SearchFilter />
+        <SearchFilter onFilterChange={handleFilterChange} />
       </div>
       <FocusCards cards={cards} />
       {hasMoreData && (
@@ -76,9 +97,7 @@ export default function Resources() {
             onClick={handleLoadMore}
             disabled={loading}
             className="mt-4 h-10"
-          >
-            {/* {loading ? 'Loading more...' : 'Load More'} */}
-          </button>
+          ></button>
         </div>
       )}
     </section>

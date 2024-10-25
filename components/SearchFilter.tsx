@@ -15,12 +15,15 @@ import {
 } from '@/components/ui/multi-select';
 import { ALL_ITEMS, group, search } from '@/lib/utils';
 
-export function SearchFilter() {
+export function SearchFilter({
+  onFilterChange,
+}: {
+  onFilterChange: (filters: string[]) => void;
+}) {
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState<MultiSelectOption[]>(() =>
     group(ALL_ITEMS),
   );
-
   const indexRef = useRef(0);
 
   const handleSearch = async (keyword?: string) => {
@@ -34,9 +37,12 @@ export function SearchFilter() {
   };
 
   return (
-    <MultiSelect onSearch={handleSearch}>
+    <MultiSelect
+      onSearch={handleSearch}
+      onValueChange={(values) => onFilterChange(values)}
+    >
       <MultiSelectTrigger className="h-12 px-8 lg:w-1/2">
-        <MultiSelectValue placeholder="Filter By Support, UI & Dependecies." />
+        <MultiSelectValue placeholder="Filter By Support, UI & Dependencies." />
       </MultiSelectTrigger>
       <MultiSelectContent>
         <MultiSelectSearch />
